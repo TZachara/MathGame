@@ -2,6 +2,7 @@
 string? name = ReadInput();
 DateTime date = DateTime.UtcNow;
 
+List<string> games = new List<string>();
 
 Menu(name, date);
 
@@ -33,10 +34,13 @@ void AdditionGame(string message)
         }
         if (i == 4)
         {
-            Console.WriteLine($"Game over! Your score is {score}");
+            Console.WriteLine($"Game over! Your score is {score}. Type any key to continue.");
+            Console.ReadLine();
         }
     }
+    ArchiveGame("Addition", score);
 }
+
 void SubtractionGame(string message)
 {
     Console.Clear();
@@ -65,10 +69,13 @@ void SubtractionGame(string message)
         }
         if (i == 4)
         {
-            Console.WriteLine($"Game over! Your score is {score}");
+            Console.WriteLine($"Game over! Your score is {score}. Type any key to continue.");
+            Console.ReadLine();
         }
     }
+    ArchiveGame("Subtraction", score);
 }
+
 void MultiplicationGame(string message)
 {
     Console.Clear();
@@ -97,10 +104,13 @@ void MultiplicationGame(string message)
         }
         if (i == 4)
         {
-            Console.WriteLine($"Game over! Your score is {score}");
+            Console.WriteLine($"Game over! Your score is {score}. Type any key to continue.");
+            Console.ReadLine();
         }
     }
+    ArchiveGame("Multiplication", score);
 }
+
 void DivisionGame(string message)
 {
     Console.Clear();
@@ -129,9 +139,11 @@ void DivisionGame(string message)
         }
         if (i == 4)
         {
-            Console.WriteLine($"Game over! Your score is {score}");
+            Console.WriteLine($"Game over! Your score is {score}. Type any key to continue.");
+            Console.ReadLine();
         }
     }
+    ArchiveGame("Division", score);
 }
 
 void Menu(string name, DateTime date)
@@ -143,6 +155,7 @@ void Menu(string name, DateTime date)
     {
         Console.Clear();
         Console.WriteLine(@$"What game would You like to play today? Choose from the option below:
+                            V - View Previous Games
                             A - Addition
                             S - Subtraction
                             M - Multiplication
@@ -169,6 +182,9 @@ void Menu(string name, DateTime date)
             case "q":
                 Console.WriteLine("Goodbye!");
                 isGameOn = false;
+                break;
+            case "v":
+                GetGames();
                 break;
             default:
                 Console.WriteLine("No such option in the menu!");
@@ -204,4 +220,23 @@ string ReadInput()
         }
     } while (!isValidInput);
     return userInput;
+}
+
+void GetGames()
+{
+    Console.Clear();
+    Console.WriteLine("Game History");
+    Console.WriteLine("------------------------------------------------------------------------");
+    foreach (string game in games)
+    {
+        Console.WriteLine(game);
+    }
+    Console.WriteLine("------------------------------------------------------------------------");
+    Console.WriteLine("Type any key to continue.");
+    Console.ReadLine();
+}
+
+void ArchiveGame(string gameType, int score)
+{
+    games.Add($"{DateTime.UtcNow} - {gameType} - Score = {score}");
 }
